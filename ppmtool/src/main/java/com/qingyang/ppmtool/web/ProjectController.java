@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/project")
@@ -35,6 +32,7 @@ public class ProjectController {
             return errorMap;
         }
         Project savedProject = projectService.saveOrUpdateProject(project);
+        System.out.println("saved project");
         return new ResponseEntity<Project>(savedProject, HttpStatus.CREATED);
     }
 }
