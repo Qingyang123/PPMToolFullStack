@@ -6,6 +6,7 @@ import store from './store';
 import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard';
 import AddProject from './components/Project/AddProject';
+import UpdateProject from './components/Project/UpdateProject';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 					<Header/>
 					<Route path='/dashboard' exact component={Dashboard}/>
 					<Route path='/addProject' exact component={AddProject}/>
+					<Route path='/updateProject/:id' exact component={UpdateProject}/>
 				</div>
 			</BrowserRouter>
 		</Provider>
