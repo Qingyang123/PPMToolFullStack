@@ -10,6 +10,8 @@ import com.qingyang.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectTaskService {
 
@@ -78,5 +80,23 @@ public class ProjectTaskService {
             throw new ProjectNotFoundException("Project Task '" + projectSequence+"' does not exist in project: '" + projectIdentifier);
         }
         return projectTask;
+    }
+
+    public ProjectTask updatePTByProjectSequence(ProjectTask updatedTask, String projectIdentifier, String projectSequence) {
+        ProjectTask projectTask = findPTByProjectSequence(projectIdentifier, projectSequence);
+        projectTask = updatedTask;
+        return projectTaskRepository.save(projectTask);
+    }
+
+    public void deletePTByProjectSequence(String projectIdentifier, String projectSequence) {
+        ProjectTask projectTask = findPTByProjectSequence(projectIdentifier, projectSequence);
+        Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+
+        List<ProjectTask> pts = backlog.getProjectTasks();
+        pts.remove(projectTask);
+        backlog.setProjectTasks(pts);
+        backlog.setPTSequence(pts.size());
+        backlogRepository.save(backlog);
+        projectTaskRepository.delete(projectTask);
     }
 }
