@@ -18,7 +18,6 @@ public class ProjectTaskService {
     private ProjectTaskRepository projectTaskRepository;
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
-        // TODO: EXCEPTION: Project not FOUND
 
         Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
         projectTask.setBacklog(backlog);
@@ -41,5 +40,9 @@ public class ProjectTaskService {
         }
 
         return projectTaskRepository.save(projectTask);
+    }
+
+    public Iterable<ProjectTask>findBacklogProjectTasks(String projectIdentifier) {
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 }
