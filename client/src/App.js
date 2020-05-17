@@ -9,6 +9,8 @@ import AddProject from './components/Project/AddProject';
 import UpdateProject from './components/Project/UpdateProject';
 import ProjectBoard from './components/ProjectBoard/ProjectBoard';
 import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
+import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
+
 import './App.css';
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
 					<Route path='/updateProject/:id' exact component={UpdateProject}/>
 					<Route path='/projectBoard/:id' exact component={ProjectBoard}/>
 					<Route path='/addProjectTask/:id' exact component={AddProjectTask}/>
+					<Route path='/updateProjectTask/:backlog_id/:pt_id' exact component={UpdateProjectTask}/>
 				</div>
 			</BrowserRouter>
 		</Provider>

@@ -32,7 +32,6 @@ class ProjectBoard extends Component {
 		let BoardContent;
 		const boardLogic = (errors, project_tasks) => {
 			if (project_tasks.length < 1) {
-				console.log(errors)
 				if (errors.projectNotFound) {
 					return (
 						<div className="alert alert-danger text-center" role="alert">

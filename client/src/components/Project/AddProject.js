@@ -93,14 +93,14 @@ class AddProject extends Component {
 
                                 <h6>Start Date</h6>
                                 <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="start_date"
+                                    <input type="date" className="form-control form-control-lg"
                                         name='start_date'
                                         value={start_date}
                                         onChange={this.onChangeHandler}/>
                                 </div>
                                 <h6>Estimated End Date</h6>
                                 <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="end_date"
+                                    <input type="date" className="form-control form-control-lg"
                                         name='end_date'
                                         value={end_date}
                                         onChange={this.onChangeHandler}/>
