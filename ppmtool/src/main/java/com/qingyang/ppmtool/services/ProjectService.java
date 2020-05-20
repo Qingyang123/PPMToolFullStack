@@ -58,6 +58,7 @@ public class ProjectService {
         }
     }
 
+
     public Project findProjectByIdentifier(String projectId, String username) {
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
         if (project == null) {
@@ -68,6 +69,7 @@ public class ProjectService {
         }
         return project;
     }
+
 
     public Iterable<Project> findAllProjects(String username) {
         return projectRepository.findAllByProjectLeader(username);
