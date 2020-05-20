@@ -24,43 +24,36 @@ public class ProjectTaskService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
+    @Autowired
+    private ProjectService projectService;
 
-        try {
-            Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
-            projectTask.setBacklog(backlog);
+    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {
 
-            // We want our project sequence to be like this: IDPRO-1  IDPRO-2  ...100 101
-            Integer BacklogSequence = backlog.getPTSequence();
-            BacklogSequence ++;
-            backlog.setPTSequence(BacklogSequence);
+        Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
+        projectTask.setBacklog(backlog);
 
-            // Add sequence and projectIdentifier to projectTask
-            projectTask.setProjectSequence(backlog.getProjectIdentifier() + '-' + BacklogSequence);
-            projectTask.setProjectIdentifier(projectIdentifier);
-            System.out.println(projectTask.toString());
-            if (projectTask.getStatus() == "" || projectTask.getStatus() == null) {
-                projectTask.setStatus("TODO");
-            }
-            System.out.println(projectTask.getStatus());
-            System.out.println(projectTask.getPriority());
-            if (projectTask.getPriority() == null) {
-                System.out.println("here1");
-                projectTask.setPriority(3);
-                System.out.println("here2");
-            }
-            return projectTaskRepository.save(projectTask);
-        } catch (Exception e) {
-            throw new ProjectNotFoundException("Project not Found");
+        // We want our project sequence to be like this: IDPRO-1  IDPRO-2  ...100 101
+        Integer BacklogSequence = backlog.getPTSequence();
+        BacklogSequence ++;
+        backlog.setPTSequence(BacklogSequence);
+
+        // Add sequence and projectIdentifier to projectTask
+        projectTask.setProjectSequence(backlog.getProjectIdentifier() + '-' + BacklogSequence);
+        projectTask.setProjectIdentifier(projectIdentifier);
+        System.out.println(projectTask.toString());
+        if (projectTask.getStatus() == "" || projectTask.getStatus() == null) {
+            projectTask.setStatus("TODO");
         }
+
+        if (projectTask.getPriority() == null || projectTask.getPriority() == 0) {
+            projectTask.setPriority(3);
+        }
+        return projectTaskRepository.save(projectTask);
 
     }
 
-    public Iterable<ProjectTask>findBacklogProjectTasks(String projectIdentifier) {
-        Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
-        if (project == null) {
-            throw new ProjectNotFoundException("Project with ID: '" + projectIdentifier + "' does not exist");
-        }
+    public Iterable<ProjectTask>findBacklogProjectTasks(String projectIdentifier, String username) {
+        projectService.findProjectByIdentifier(projectIdentifier, username);
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 
