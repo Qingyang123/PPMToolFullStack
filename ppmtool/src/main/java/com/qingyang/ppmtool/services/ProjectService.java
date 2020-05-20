@@ -2,9 +2,11 @@ package com.qingyang.ppmtool.services;
 
 import com.qingyang.ppmtool.domain.Backlog;
 import com.qingyang.ppmtool.domain.Project;
+import com.qingyang.ppmtool.domain.User;
 import com.qingyang.ppmtool.exceptions.ProjectIdException;
 import com.qingyang.ppmtool.repositories.BacklogRepository;
 import com.qingyang.ppmtool.repositories.ProjectRepository;
+import com.qingyang.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,14 @@ public class ProjectService {
     @Autowired
     private BacklogRepository backlogRepository;
 
-    public Project saveOrUpdateProject(Project project) {
+    @Autowired
+    private UserRepository userRepository;
+
+    public Project saveOrUpdateProject(Project project, String username) {
         try {
+            User user = userRepository.findByUsername(username);
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
             // id == null: creating new project

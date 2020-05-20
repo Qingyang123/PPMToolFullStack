@@ -38,15 +38,17 @@ public class ProjectTaskService {
             // Add sequence and projectIdentifier to projectTask
             projectTask.setProjectSequence(backlog.getProjectIdentifier() + '-' + BacklogSequence);
             projectTask.setProjectIdentifier(projectIdentifier);
-
+            System.out.println(projectTask.toString());
             if (projectTask.getStatus() == "" || projectTask.getStatus() == null) {
                 projectTask.setStatus("TODO");
             }
-
-            if (projectTask.getPriority() == 0 || projectTask.getPriority() == null) {
+            System.out.println(projectTask.getStatus());
+            System.out.println(projectTask.getPriority());
+            if (projectTask.getPriority() == null) {
+                System.out.println("here1");
                 projectTask.setPriority(3);
+                System.out.println("here2");
             }
-
             return projectTaskRepository.save(projectTask);
         } catch (Exception e) {
             throw new ProjectNotFoundException("Project not Found");

@@ -41,6 +41,13 @@ public class Project {
     @JsonIgnore
     private Backlog backlog;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false, nullable = false)
+    @JsonIgnore
+    private User user;
+
+    private String projectLeader;
+
     @PrePersist
     protected void onCreate() {
         this.created_At = new Date();
@@ -80,4 +87,10 @@ public class Project {
 
     public Backlog getBacklog() { return backlog; }
     public void setBacklog(Backlog backlog) { this.backlog = backlog; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    public String getProjectLeader() { return projectLeader; }
+    public void setProjectLeader(String projectLeader) { this.projectLeader = projectLeader; }
 }

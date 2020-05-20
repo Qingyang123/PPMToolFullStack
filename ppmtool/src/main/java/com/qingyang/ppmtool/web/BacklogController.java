@@ -32,7 +32,6 @@ public class BacklogController {
         if (errorMap != null) {
             return errorMap;
         }
-
         ProjectTask savedProjectTask = projectTaskService.addProjectTask(projectIdentifier, projectTask);
         return new ResponseEntity<ProjectTask>(savedProjectTask, HttpStatus.CREATED);
     }
