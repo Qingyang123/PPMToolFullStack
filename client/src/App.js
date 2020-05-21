@@ -17,6 +17,7 @@ import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProj
 
 import setJWTToken from './securityUtils/setJWTToken';
 import { SET_CURRENT_USER } from './action/types';
+import { logout } from './action/authActions';
 
 import './App.css';
 
@@ -32,8 +33,8 @@ if (token) {
 
 	const currentTime = Date.now() / 1000;
 	if (decoded.exp < currentTime) {
-		// handle logout
-		// window.location.href = '/'
+		store.dispatch(logout());
+		window.location.href = '/'
 	}
 }
 

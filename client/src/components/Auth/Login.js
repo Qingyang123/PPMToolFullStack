@@ -19,6 +19,9 @@ class Login extends Component {
         if (nextProps.auth.validToken) {
             this.props.history.push('/dashboard');
         }
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors })
+        }
     }
 
     onChangeHandler = e => {
@@ -48,18 +51,26 @@ class Login extends Component {
                             <form onSubmit={this.onSubmitHandler}>
                                 <div className="form-group">
                                     <input type="text" placeholder="Email Address (Username)"
-                                        className="form-control form-control-lg" 
+                                        className={classnames("form-control form-control-lg", {
+                                            "is-invalid": errors.username
+                                        })} 
                                         name="username"
                                         value={username}
                                         onChange={this.onChangeHandler}/>
+                                    { errors.username && <div className="invalid-feedback">{errors.username}</div> }
                                 </div>
+
                                 <div className="form-group">
                                     <input type="password" placeholder="Password"
-                                        className="form-control form-control-lg" 
+                                        className={classnames("form-control form-control-lg", {
+                                            "is-invalid": errors.password
+                                        })} 
                                         name="password"
                                         value={password}
                                         onChange={this.onChangeHandler}/>
+                                    { errors.password && <div className="invalid-feedback">{errors.password}</div> }
                                 </div>
+
                                 <input type="submit" className="btn btn-info btn-block mt-4" />
                             </form>
                         </div>
@@ -72,7 +83,8 @@ class Login extends Component {
 
 Login.propTypes = {
     login: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

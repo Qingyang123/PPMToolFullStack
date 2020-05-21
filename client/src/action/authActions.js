@@ -42,3 +42,13 @@ export const login = loginCredential => async dispatch => {
         })
     }
 }
+
+
+export const logout = () => dispatch => {
+    localStorage.removeItem('token');
+    setJWTToken(false);
+    dispatch({
+        type: SET_CURRENT_USER,
+        payload: {}
+    })
+}
