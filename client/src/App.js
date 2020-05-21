@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import jwt_decode from "jwt-decode";
 
 import store from './store';
 import Landing from './components/Layout/Landing';
@@ -14,7 +15,27 @@ import ProjectBoard from './components/ProjectBoard/ProjectBoard';
 import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
 import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
 
+import setJWTToken from './securityUtils/setJWTToken';
+import { SET_CURRENT_USER } from './action/types';
+
 import './App.css';
+
+
+const token = localStorage.getItem('token');
+if (token) {
+	setJWTToken(token);
+	const decoded = jwt_decode(token); 
+	store.dispatch({
+		type: SET_CURRENT_USER,
+		payload: decoded
+	})
+
+	const currentTime = Date.now() / 1000;
+	if (decoded.exp < currentTime) {
+		// handle logout
+		// window.location.href = '/'
+	}
+}
 
 function App() {
 	return (

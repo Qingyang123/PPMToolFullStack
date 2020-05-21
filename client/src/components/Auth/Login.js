@@ -15,6 +15,12 @@ class Login extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.validToken) {
+            this.props.history.push('/dashboard');
+        }
+    }
+
     onChangeHandler = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -70,6 +76,7 @@ Login.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    auth: state.auth,
     errors: state.errors 
 })
 
