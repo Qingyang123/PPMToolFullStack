@@ -10,3 +10,7 @@ export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const GET_BACKLOG_PTS = 'GET_BACKLOG_PTS';
 export const GET_PROJECT_TASK = 'GET_PROJECT_TASK';
 export const DELETE_PROJECT_TASK = 'DELETE_PROJECT_TASK';
+
+
+// Auth Types
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
