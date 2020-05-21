@@ -24,9 +24,8 @@ export const register = (newUser, history) => async dispatch => {
 
 export const login = loginCredential => async dispatch => {
     try {
-        const res = axios.post("/api/users/login", loginCredential);
+        const res = await axios.post("/api/users/login", loginCredential);
         const { token } = res.data;
-
         localStorage.setItem('token', token);
         setJWTToken(token);
 
