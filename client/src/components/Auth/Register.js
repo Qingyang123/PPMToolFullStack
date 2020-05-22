@@ -18,6 +18,12 @@ class Register extends Component {
 		}
 	}
 
+	componentDidMount() {
+        if (this.props.auth.validToken) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors })
@@ -110,11 +116,13 @@ class Register extends Component {
 
 Register.propTypes = {
 	register: PropTypes.func.isRequired,
-	errors: PropTypes.object.isRequired
+	errors: PropTypes.object.isRequired,
+	auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-	errors: state.errors
+	errors: state.errors,
+	auth: state.auth
 })
   
 
